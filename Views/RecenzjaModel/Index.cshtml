@@ -1,0 +1,59 @@
+@model IEnumerable<PiwkoMozna.Models.RecenzjaModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Recenzje</h1>
+
+<p>
+    <a asp-action="Create">Dodaj Recenzję</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReviewDate)
+            </th>
+            <th>
+                Użytkownik
+            </th>
+            <th>
+                Piwo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UzytkownikModel.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PiwoModel.BeerName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ReviewID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ReviewID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ReviewID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,57 @@
+@model IEnumerable<PiwkoMozna.Models.RecenzjaModel>
+
+@{
+    ViewData["Title"] = $"Recenzje piwa {ViewData["BeerNameRecenzja"]}";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-controller="RecenzjaModel" asp-action="Create" asp-route-BeerName="@ViewData["BeerNameRecenzja"]">Dodaj Recenzję </a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReviewDate)
+            </th>
+            <th>
+                Użytkownik
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PiwoModel.BeerName) Piwa
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) 
+{  
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UzytkownikModel.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PiwoModel.BeerName)
+        </td>
+    </tr>         
+}
+    </tbody>
+</table>
+
+<a asp-controller="PiwoModel" asp-action="Katalog">Powrót do Katalogu Piw</a>

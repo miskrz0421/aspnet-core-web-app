@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Dokumentacja";
+}
+
+<div style="text-align: center; padding: 20px;">
+    <h1 class="display-4">@ViewData["Title"] - PiwkoMożna</h1>
+    <h2>Autorzy</h2>
+    <p>Kacper Machnik  - email: kmachnik@student.agh.edu.pl</p>
+    <p>Michał Krzempek - email: krzempekm@student.agh.edu.pl</p>
+
+    <h2>Opis</h2>
+    <p>PiwkoMożna to aplikacja internetowa napisana w technologii ASP.NET Core MVC, która umożliwia użytkownikom przeglądanie, recenzowanie i ocenianie różnych piw. Aplikacja korzysta z mechanizmu sesji do zapamiętywania zalogowania użytkowników oraz przechowuje dane w bazie danych SQLite. Hasła użytkowników są przechowywane w postaci skrótu (hashu) dla zwiększenia bezpieczeństwa. Aplikacja oferuje również interfejs REST API do zarządzania danymi.</p>
+
+    <h2>Funkcjonalności</h2>
+    <ul style="text-align: left; display: inline-block;">
+        <li><b>Rejestracja i logowanie użytkowników:</b> Domyślnie tylko administrator może dodawać nowych użytkowników do bazy. Użytkownicy mogą logować się do aplikacji. Hasła są przechowywane w postaci skrótu (hashu).</li>
+        <li><b>Przeglądanie piw:</b> Zalogowani użytkownicy mogą przeglądać listę piw dostępnych w aplikacji. Szczegółowe informacje o każdym piwie, takie jak nazwa, procent alkoholu, styl i producent.</li>
+        <li><b>Recenzje i oceny:</b> Zalogowani użytkownicy mogą dodawać recenzje i oceny do piw. Każda recenzja zawiera komentarz i ocenę (0-10).</li>
+        <li><b>Przeglądanie browarów:</b> Informacje o browarach, takie jak nazwa, miasto i kraj. Powiązanie piw z ich producentami.</li>
+        <li><b>REST API:</b> Możliwość zarządzania browarami za pomocą REST API przez użytkowników z uprawnieniami administratora. Autoryzacja żądań za pomocą tokenów.</li>
+        <li><b>Uprawnienia:</b> Administratorzy mają pełny dostęp do bazy danych i operacji CRUD na wszystkich modelach.</li>
+    </ul>
+
+    <h2>Tabele w bazie danych</h2>
+    <div style="text-align: center; margin-top: 20px;">
+            <img src="~/images/DiagramEncji.png" alt="Schemat bazy danych" style="max-width: 100%; height: auto;" />
+    </div>
+    <ul style="text-align: left; display: inline-block;">
+        <li><b>Users:</b>
+            <ul>
+                <li>UserID (int) - klucz główny</li>
+                <li>Email (string) - adres e-mail użytkownika</li>
+                <li>Password (string) - hasło użytkownika (przechowywane w postaci skrótu)</li>
+                <li>IsAdmin (bool) - czy użytkownik jest administratorem</li>
+                <li>Token (string) - token do autoryzacji Rest Api</li>
+            </ul>
+        </li>
+        <li><b>Beers:</b>
+            <ul>                
+                <li>BeerName (string) - nazwa piwa (klucz główny)</li>
+                <li>BreweryName (string) - klucz obcy odnoszący się do tabeli Breweries</li>
+                <li>Style (string) - styl piwa (np. jasne, ciemne)</li>
+                <li>ABV (float) - procent alkoholu</li>                
+                <li>AverageRating - średnia ocen</li>
+            </ul>
+        </li>
+        <li><b>Reviews:</b>
+            <ul>
+                <li>ReviewID (int) - klucz główny</li>
+                <li>UserID (int) - klucz obcy odnoszący się do tabeli Users</li>
+                <li>BeerName (string) - klucz obcy odnoszący się do tabeli Beers</li>
+                <li>Rating (int) - ocena (1-5)</li>
+                <li>Comment (string) - komentarz</li>
+                <li>ReviewDate (DateTime) - data wprowadzenia recenzji</li>
+            </ul>
+        </li>
+        <li><b>Breweries:</b>
+            <ul>
+                <li>BreweryName (string) - nazwa browaru (klucz główny)</li>
+                <li>City (string) - miasto</li>
+                <li>Country (string) - kraj</li>
+                <li>Founded (int) - rok założenia</li>
+                <li>Description (string) - opis browaru</li>
+            </ul>
+        </li>
+    </ul>
+
+
+    <h2>Sposób użycia</h2>
+    <ol style="text-align: left; display: inline-block;">
+        <li><b>Początek:</b> Na początku należy zalogować się jako administrator - (e-mail: admin@piwkomozna.com hasło: admin). Po zalogowaniu mamy pełny dostęp. Należy utworzyć nowego użytkownika i się wylogować.</li>
+        <li><b>Logowanie:</b> Przejdź do strony logowania i wprowadź swój adres e-mail oraz hasło. Po zalogowaniu będziesz mógł przeglądać piwa, browary oraz dodawać recenzje do piw.</li>
+        <li><b>Dodawanie recenzji:</b> Na stronie katalog piw możesz dodać swoją recenzję, wprowadzając ocenę i komentarz.</li>
+        <li><b>REST API:</b> Program konsolowy obsługujący Rest Api znajduje się w osobnym projekcie. Przed uruchomieniem należy wpisać w 2 polach e-mail oraz token konta administratora. Następnie należy uruchomić program. Program obsługuje End Pointy poprzez konsolę i funkcję sterującą. </li>
+    </ol>
+
+</div>

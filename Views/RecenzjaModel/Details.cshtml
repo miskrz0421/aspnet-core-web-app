@@ -1,0 +1,48 @@
+@model PiwkoMozna.Models.RecenzjaModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>RecenzjaModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReviewDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReviewDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UzytkownikModel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UzytkownikModel.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PiwoModel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PiwoModel.BeerName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ReviewID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,59 @@
+@model IEnumerable<PiwkoMozna.Models.PiwoModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Piwa</h1>
+
+<p>
+    <a asp-action="Create">Dodaj Piwo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BeerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Style)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ABV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AverageRating)
+            </th>
+            <th>
+                Browar
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Style)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ABV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AverageRating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrowarModel.BreweryName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BeerName">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BeerName">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BeerName">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

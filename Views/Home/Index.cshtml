@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model PiwkoMozna.Models.UzytkownikModel
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+@if (Context.Session.GetString("IsLoggedIn") != null && Context.Session.GetString("IsLoggedIn") == "true")
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1 class="display-4">Witamy na PiwkoMozna!</h1>
+                        <p>Jesteś zalogowany jako @Context.Session.GetString("email")</p>
+                    </div>   
+                    <div class="card-body">              
+                        <div class="text-center">
+                            <form asp-controller="Home" asp-action="Logout" method="post">
+                                <button type="submit" class="btn btn-primary">Wyloguj</button>
+                            </form>
+                        </div
+                    </div>               
+                </div>
+            </div>
+        </div>
+    </div>   
+    
+}
+else {
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1 class="display-4">Witamy na PiwkoMozna!</h1>                        
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Home" asp-action="Login" method="post" class="register-form">
+                            <div class="form-group">
+                                <label for="Email">Adres e-mail:</label>
+                                <input asp-for="Email" type="email" id="Email" class="form-control" placeholder="Wpisz e-mail" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Hasło:</label>
+                                <input asp-for="Password" type="password" id="Password" class="form-control" placeholder="Wpisz hasło" required />
+                            </div>
+                                <br/>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Zaloguj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

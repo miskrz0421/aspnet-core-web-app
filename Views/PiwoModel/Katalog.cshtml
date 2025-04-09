@@ -1,0 +1,202 @@
+@model IEnumerable<PiwkoMozna.Models.PiwoModel>
+@{
+    ViewData["Title"] = "Katalog Piw";
+    var beerNames = ViewBag.BeerNames as List<string>;
+    var breweryNames = ViewBag.BreweryNames as List<string>;
+    var styles = ViewBag.Styles as List<string>;
+    var currentBeerName = ViewBag.CurrentBeerName as string;
+    var currentBreweryName = ViewBag.CurrentBreweryName as string;
+    var currentStyle = ViewBag.CurrentStyle as string;
+    var currentMinABV = ViewBag.CurrentMinABV as double?;
+    var currentMaxABV = ViewBag.CurrentMaxABV as double?;
+    var currentMinRating = ViewBag.CurrentMinRating as double?;
+    var currentMaxRating = ViewBag.CurrentMaxRating as double?;
+    var currentSortBy = ViewBag.CurrentSortBy as string;
+}
+
+<div class="container">
+    <div class="sidebar">
+        <h2>Filtrowanie</h2>
+        <form method="get" asp-action="Katalog">
+            <div class="form-group">
+                <label for="BeerName">Nazwa Piwa</label>
+                <select id="BeerName" name="BeerName" class="form-control">
+                    <option value="">Wszystkie</option>
+                    @foreach (var name in beerNames)
+                    {
+                        if (name == currentBeerName)
+                        {
+                            <option value="@name" selected="selected">@name</option>
+                        }
+                        else
+                        {
+                            <option value="@name">@name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="BreweryName">Browar</label>
+                <select id="BreweryName" name="BreweryName" class="form-control">
+                    <option value="">Wszystkie</option>
+                    @foreach (var name in breweryNames)
+                    {
+                        if (name == currentBreweryName)
+                        {
+                            <option value="@name" selected="selected">@name</option>
+                        }
+                        else
+                        {
+                            <option value="@name">@name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Style">Styl</label>
+                <select id="Style" name="Style" class="form-control">
+                    <option value="">Wszystkie</option>
+                    @foreach (var style in styles)
+                    {
+                        if (style == currentStyle)
+                        {
+                            <option value="@style" selected="selected">@style</option>
+                        }
+                        else
+                        {
+                            <option value="@style">@style</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="MinABV">Minimalne ABV</label>
+                <input type="number" step="0.1" id="MinABV" name="MinABV" value="@currentMinABV.ToString().Replace('.', ',')" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="MaxABV">Maksymalne ABV</label>
+                <input type="number" step="0.1" id="MaxABV" name="MaxABV" value="@currentMaxABV.ToString().Replace('.', ',')" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="MinRating">Minimalna Ocena</label>
+                <input type="number" step="0.1" id="MinRating" name="MinRating" value="@currentMinRating" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="MaxRating">Maksymalna Ocena</label>
+                <input type="number" step="0.1" id="MaxRating" name="MaxRating" value="@currentMaxRating" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="SortBy">Sortuj według</label>
+                <select id="SortBy" name="SortBy" class="form-control">
+                    <option value="">Brak</option>
+                    @if(currentSortBy == "ABVAsc") {
+                        <option value="ABVAsc" selected="selected">ABV Rosnąco</option>
+                    }
+                    else {
+                        <option value="ABVAsc">ABV Rosnąco</option>
+                    }
+                    @if(currentSortBy == "ABVDesc") {
+                        <option value="ABVDesc" selected="selected">ABV Malejąco</option>
+                    }
+                    else {
+                        <option value="ABVDesc">ABV Malejąco</option>
+                    }
+                    @if(currentSortBy == "RatingAsc") {
+                        <option value="RatingAsc" selected="selected">Ocena Rosnąco</option>
+                    }
+                    else {
+                        <option value="RatingAsc">Ocena Rosnąco</option>
+                    }
+                    @if(currentSortBy == "RatingDesc") {
+                        <option value="RatingDesc" selected="selected">Ocena Malejąco</option>
+                    }
+                    else {
+                        <option value="RatingDesc">Ocena Malejąco</option>
+                    }            
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Filtruj</button>
+            <a href="@Url.Action("Katalog")" class="btn btn-secondary">Resetuj</a>
+        </form>
+    </div>
+
+    <div class="main-content">
+        <h2>Katalog Piw</h2>
+        <table class="table table-expanded">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BeerName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Style)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ABV)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AverageRating)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BrowarModel.BreweryName)
+                    </th>
+                    <th>
+                        Recenzje
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BeerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Style)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ABV)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageRating, "Decimal")
+                        </td>
+                        <td>
+                            <a asp-action="KatalogBrowarow" asp-route-BreweryName="@item.BrowarModel.BreweryName"> @item.BrowarModel.BreweryName</a> 
+                        </td>
+                        <td>
+                            <a asp-action="KatalogRecenzje" asp-route-BeerName="@item.BeerName">Recenzje @item.BeerName</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .container {
+        display: flex;
+    }
+
+    .sidebar {
+        flex: 1;
+        padding-right: 20px;
+    }
+
+    .main-content {
+        flex: 3;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .table-expanded {
+        width: 1000px;
+    }
+    .decimal-format {
+    display: inline-block;
+}
+</style>
