@@ -1,4 +1,4 @@
-# Aplikacja ASP.NET Core Web App
+# Aplikacja Webowa ASP.NET Core Web App
 
 ## Autorzy
 - **[Michał Krzempek](https://github.com/miskrz0421)**
